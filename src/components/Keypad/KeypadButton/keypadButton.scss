@@ -1,0 +1,38 @@
+.KeypadButton {
+    background-color: var(--keypad-button-color);
+    color: var(--keypad-button-text-color);
+    box-shadow: 0 3px 0 0 var(--keypad-button-shadow-color);
+    
+    font-weight: bold;
+    padding: 5px;
+    min-width: 40px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;    
+
+    &:hover {
+        background-color: color-mix(in srgb, var(--keypad-button-color), #fff 30%);
+    }
+}
+
+.KeypadButton__standard {
+    --keypad-button-color: var(--key-standard-background);
+    --keypad-button-shadow-color: var(--key-standard-shadow);
+    --keypad-button-text-color: var(--text-secondary-color);
+    font-size: 1.2rem;
+}
+
+.KeypadButton__special {
+    --keypad-button-color: var(--key-special-background);
+    --keypad-button-shadow-color: var(--key-special-shadow);
+    --keypad-button-text-color: var(--text-primary-color);
+    font-size: 0.8rem;
+}
+
+.KeypadButton__equals {
+    --keypad-button-color: var(--key-equals-background);
+    --keypad-button-shadow-color: var(--key-equals-shadow);
+    --keypad-button-text-color: var(--text-primary-color);
+    font-size: 0.8rem;
+}
