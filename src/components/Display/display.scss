@@ -1,0 +1,19 @@
+@import '../../common/styles/variables.scss';
+
+$height: 100px;
+
+.Display {
+    box-sizing: border-box;
+    padding: $gutter-xl;
+    width: 100%;
+    height: 100px;
+    border-radius: 5px;
+    
+    background-color: var(--screen-background);
+
+    color: var(--text-primary-color);
+    text-align: right;
+    font-size: 3rem;
+    font-weight: bold;
+    line-height: $height - 2 * $gutter-xl;
+}

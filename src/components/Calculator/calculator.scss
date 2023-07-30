@@ -1,0 +1,12 @@
+@import '../../common/styles/mixins.scss';
+@import '../../common/styles/variables.scss';
+
+.Calculator {
+    @include center;
+
+    width: 400px;
+
+    .Keypad {
+        margin-top: $gutter-xl;
+    }
+}
