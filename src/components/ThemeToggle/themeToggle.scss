@@ -1,0 +1,60 @@
+@import "../../common/styles/variables.scss";
+
+.ThemeToggle {
+    display: flex;
+    align-items: center;
+
+    color: var(--text-primary-color);
+    font-size: 0.5rem;
+    font-weight: bold;
+}
+
+.ThemeToggle__label {
+    margin-right: $gutter-xl
+}
+
+.ThemeToggle__toggle {
+    background-color: var(--toggle-background);
+    display: flex;
+    gap: 2px;
+    height: fit-content;
+    padding: 3px;
+    border-radius: 10px;
+    cursor: pointer;
+
+    counter-reset: theme-counter;
+}
+
+label {
+    counter-increment: theme-counter;
+    position: relative;
+
+    &::before {
+        content: counter(theme-counter);
+        display: inline-block;
+        position: absolute;
+        bottom: calc(100% + $gutter-s);
+        left: 50%;
+        transform: translateX(-50%);
+        
+    }
+}
+
+input[type="radio"] {
+    display: none;
+}
+
+input[type="radio"] ~ span {
+    width: 10px;
+    height: 10px;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    background: var(--toggle-indicator-background);
+    display: block;
+    cursor: pointer;
+    opacity: 0;
+}
+
+label input[type="radio"]:checked ~ span {
+    opacity: 1;
+}

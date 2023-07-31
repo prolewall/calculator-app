@@ -1,10 +1,7 @@
-@import '../../common/styles/mixins.scss';
 @import '../../common/styles/variables.scss';
 
 .Calculator {
-    @include center;
-
-    width: 300px;
+    width: 100%;
 
     .Keypad {
         margin-top: $gutter-xl;

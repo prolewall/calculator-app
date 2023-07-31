@@ -1,6 +1,7 @@
 .theme-1 {
     --main-background: hsl(222, 26%, 31%);
     --toggle-background: hsl(223, 31%, 20%);
+    --toggle-indicator-background: hsl(6, 63%, 50%);
     --keypad-background: hsl(223, 31%, 20%);
     --screen-background: hsl(224, 36%, 15%);
     --key-standard-background: hsl(30, 25%, 89%);
@@ -9,7 +10,6 @@
     --key-equals-shadow: hsl(6, 70%, 34%);
     --key-special-background: hsl(225, 21%, 49%);
     --key-special-shadow: hsl(224, 28%, 35%);
-    --theme-toggle-background: hsl(6, 63%, 50%);
     --text-primary-color: hsl(0, 0%, 100%);
     --text-secondary-color: hsl(221, 14%, 31%);
 }

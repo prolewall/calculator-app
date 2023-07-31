@@ -1,6 +1,24 @@
 @import './common/styles/themes.scss';
+@import './common/styles/mixins.scss';
+@import './common/styles/variables.scss';
 
 .App {
     height: 100%;
     background-color: var(--main-background);
+}
+
+.App__content {
+    @include center;
+    width: 300px;
+}
+
+.App__settings {
+    margin-bottom: $gutter-xl;
+    display: flex;
+    justify-content: space-between;
+}
+
+.App__name {
+    color: var(--text-primary-color);
+    font-weight: bold;
 }
