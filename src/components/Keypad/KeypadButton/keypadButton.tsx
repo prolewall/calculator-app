@@ -9,14 +9,12 @@ export enum ButtonType {
 interface KeypadButtonProps {
     value: string;
     type: ButtonType;
-    onClickCallback: (value?: string) => void;
+    onClickCallback: () => void;
     id?: string;
 }
 
 const KeypadButton:React.FC<KeypadButtonProps> = ({value, type, onClickCallback, id}) => {
-    const onClick = () => {
-        onClickCallback.apply(value);
-    }
+    // console.log("KeypadButton rerendering");
 
     const getTypeClass = (type: ButtonType): string => {
         switch(type) {
@@ -27,7 +25,7 @@ const KeypadButton:React.FC<KeypadButtonProps> = ({value, type, onClickCallback,
     }
 
     return (
-        <button id={id} className={'KeypadButton ' + getTypeClass(type)} onClick={onClick}>
+        <button id={id} className={'KeypadButton ' + getTypeClass(type)} onClick={() => onClickCallback()}>
             {value}
         </button>
     )
