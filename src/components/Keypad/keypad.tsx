@@ -10,9 +10,6 @@ interface KeypadProps {
 }
 
 const Keypad:React.FC<KeypadProps> = ({numberInputCallback, calculatorOperationCallback, mathematicalOperationCallback}) => {
-    // console.log("Keypad rerendering");
-
-
     return (
         <div className="Keypad">
             <KeypadButton value={"7"} type={ButtonType.Standard} onClickCallback={() => numberInputCallback("7")} />

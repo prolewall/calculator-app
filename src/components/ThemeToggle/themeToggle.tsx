@@ -5,9 +5,6 @@ interface ThemeToggleProps {
 }
 
 const ThemeToggle:React.FC<ThemeToggleProps> = ({themeChangeCallback}) => {
-
-    
-
     return (
         <div className="ThemeToggle">
             <p className="ThemeToggle__label">THEME</p>

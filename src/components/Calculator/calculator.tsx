@@ -6,7 +6,10 @@ import Keypad from '../Keypad';
 import { CalculatorOperation, MathematicalOperation } from '../../constants/operationConstants';
 
 
+
 const Calculator: React.FC = () => {
+  const MAX_DIGITS = 15;
+
   const [currentInput, setCurrentInput] = useState("0");
   const [previousResult, setPreviousResult] = useState<string | undefined>(undefined);
   const [previousInput, setPreviousInput] = useState<string | undefined>(undefined);
@@ -14,6 +17,9 @@ const Calculator: React.FC = () => {
   const [justCalculated, setJustCalculated] = useState(false);
 
   const inputNumber = (value: string) => {
+    if (currentInput.length >= MAX_DIGITS) {
+      return;
+    }
     if (justCalculated) {
       if (previousInput !== undefined) {
         setPreviousResult(currentInput);

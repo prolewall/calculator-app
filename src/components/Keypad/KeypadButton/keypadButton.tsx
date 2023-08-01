@@ -14,8 +14,6 @@ interface KeypadButtonProps {
 }
 
 const KeypadButton:React.FC<KeypadButtonProps> = ({value, type, onClickCallback, id}) => {
-    // console.log("KeypadButton rerendering");
-
     const getTypeClass = (type: ButtonType): string => {
         switch(type) {
             case ButtonType.Standard: return "KeypadButton__standard";
