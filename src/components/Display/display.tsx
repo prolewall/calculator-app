@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import './display.scss';
 import { MathematicalOperation } from '../../constants/operationConstants';
 
@@ -9,15 +9,35 @@ interface DisplayProps {
     operation?: MathematicalOperation;
 }
 
-function getTextWidth(canvas: HTMLCanvasElement, text: string): number{
+function getTextWidth(canvas: HTMLCanvasElement, text: string): number {
     const context = canvas.getContext("2d") ?? new CanvasRenderingContext2D();
     const metrics = context.measureText(text);
     return metrics.width;
-  }
+}
+
+function calculateFontSize(canvas: HTMLCanvasElement, containerWidth: number, text: string): number {
+    const textWidth = getTextWidth(canvas, text);
+    return textWidth <= containerWidth ? 1 : containerWidth/textWidth;
+}
+
+function getInputWithCommas(currentInput: string): string {
+    let integerPart, decimalPart;
+    [integerPart, decimalPart] = currentInput.split(".");
+    const integerNumberPart = parseInt(integerPart);
+
+    let resultString = integerNumberPart.toLocaleString("en-US");
+    if (decimalPart) {
+        resultString = resultString.concat(".", decimalPart);
+    }
+    if (currentInput.endsWith(".")) {
+        resultString = resultString.concat(".");
+    }
+    return resultString;
+}
 
 const Display:React.FC<DisplayProps> = ({currentInput, previousResult, previousInput, operation}) => {
-
     const calculationString = `${previousResult ?? ""} ${operation ?? ""}${previousInput !== undefined ? ` ${previousInput} =` : ""}`
+    const inputString = getInputWithCommas(currentInput);
     const canvas = useMemo(() => {
         const canvas = document.createElement("canvas");
         const context = canvas.getContext("2d");
@@ -27,13 +47,21 @@ const Display:React.FC<DisplayProps> = ({currentInput, previousResult, previousI
         return canvas;
     }, []);
 
-    const inputWidth = getTextWidth(canvas, currentInput);
-    console.log(`width: ${inputWidth}`);
+    const ref = useRef<HTMLDivElement>(null);
+    const [displayWidth, setDisplayWidth] = useState(0);
+    useEffect(() => {
+        const element = ref.current ?? new HTMLDivElement();
+        const totalWidth = element.offsetWidth;
+        const style = getComputedStyle(element);
+        setDisplayWidth(totalWidth - parseFloat(style.paddingRight) - parseFloat(style.paddingLeft));
+    }, [displayWidth]);
+    
+    const inputFontSize = calculateFontSize(canvas, displayWidth, inputString);
 
     return (
-        <div className="Display">
+        <div className="Display" ref={ref}>
             <p className="Display__calculation" >{calculationString}</p>
-            <p className="Display__currentInput">{currentInput}</p>
+            <p className="Display__currentInput" style={{scale: `${inputFontSize}`}}>{inputString}</p>
         </div>
     );
 }
