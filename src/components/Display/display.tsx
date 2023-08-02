@@ -2,7 +2,7 @@ import React, {useEffect, useMemo, useRef, useState} from 'react';
 import './display.scss';
 import { MathematicalOperation } from 'constants/operationConstants';
 
-interface DisplayProps {
+export interface DisplayProps {
     currentInput: string;
     previousResult?: string;
     previousInput?: string;
@@ -10,7 +10,10 @@ interface DisplayProps {
 }
 
 function getTextWidth(canvas: HTMLCanvasElement, text: string): number {
-    const context = canvas.getContext("2d") ?? new CanvasRenderingContext2D();
+    const context = canvas.getContext("2d");
+    if (!context) {
+        return 0;
+    }
     const metrics = context.measureText(text);
     return metrics.width;
 }
@@ -60,8 +63,8 @@ const Display:React.FC<DisplayProps> = ({currentInput, previousResult, previousI
 
     return (
         <div className="Display" ref={ref}>
-            <p className="Display__calculation" >{calculationString}</p>
-            <p className="Display__currentInput" style={{scale: `${inputFontSize}`}}>{inputString}</p>
+            <p data-testid="Display-calculation" className="Display__calculation" >{calculationString}</p>
+            <p data-testid="Display-current-input" className="Display__currentInput" style={{scale: `${inputFontSize}`}}>{inputString}</p>
         </div>
     );
 }
