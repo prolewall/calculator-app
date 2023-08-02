@@ -1,9 +1,9 @@
 import './keypadButton.scss';
 
 export enum ButtonType {
-    Standard,
-    Special,
-    Equals
+    Standard = "Standard",
+    Special = "Special",
+    Equals = "Equals"
 }
 
 interface KeypadButtonProps {
