@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
 import './calculator.scss';
-import Display from '../Display';
-import Keypad from '../Keypad';
-import { CalculatorOperation, MathematicalOperation } from '../../constants/operationConstants';
+import Display from 'components/Display';
+import Keypad from 'components/Keypad';
+import { CalculatorOperation, MathematicalOperation } from 'constants/operationConstants';
 
 
 

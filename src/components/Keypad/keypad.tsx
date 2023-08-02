@@ -1,6 +1,6 @@
 import './keypad.scss';
 import KeypadButton, { ButtonType } from './KeypadButton';
-import { CalculatorOperation, MathematicalOperation } from '../../constants/operationConstants';
+import { CalculatorOperation, MathematicalOperation } from 'constants/operationConstants';
 
 
 interface KeypadProps {

@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import './display.scss';
-import { MathematicalOperation } from '../../constants/operationConstants';
+import { MathematicalOperation } from 'constants/operationConstants';
 
 interface DisplayProps {
     currentInput: string;
