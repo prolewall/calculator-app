@@ -6,12 +6,12 @@ describe("ThemeToggle", () => {
 
     const mockCallback = jest.fn();
 
-    const renderComponent = () => {
-        render(<ThemeToggle themeChangeCallback={mockCallback}/>);
+    const renderComponent = (inititalTheme: string) => {
+        render(<ThemeToggle currentTheme={inititalTheme} themeChangeCallback={mockCallback}/>);
     }
 
     it("should trigger change for theme", () => {
-        renderComponent();
+        renderComponent("theme-1");
 
         const themeInput = screen.getAllByRole("radio").at(1);
 
@@ -22,7 +22,7 @@ describe("ThemeToggle", () => {
     });
 
     it("should not trigger change for theme if theme already selected", () => {
-        renderComponent();
+        renderComponent("theme-1");
 
         const themeInput = screen.getAllByRole("radio").at(0);
 
