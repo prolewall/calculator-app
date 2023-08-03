@@ -1,18 +1,18 @@
-import './App.scss';
-import Calculator from './components/Calculator';
-import ThemeToggle from './components/ThemeToggle';
-import React, { useState, useCallback } from 'react';
-
-
+import "./App.scss";
+import Calculator from "./components/Calculator";
+import ThemeToggle from "./components/ThemeToggle";
+import React, { useState, useCallback } from "react";
 
 const App = () => {
   const getInitialTheme = (): string => {
     const storedThemePreference = localStorage.getItem("theme");
 
     if (storedThemePreference) {
-      return storedThemePreference
+      return storedThemePreference;
     } else {
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const prefersDark = window.matchMedia(
+        "(prefers-color-scheme: dark)",
+      ).matches;
 
       if (prefersDark) {
         return "theme-1";
@@ -34,12 +34,15 @@ const App = () => {
       <div className="App__content">
         <div className="App__settings">
           <p className="App__name">calc</p>
-          <ThemeToggle currentTheme={currentTheme} themeChangeCallback={handleThemeClassChange}/>
+          <ThemeToggle
+            currentTheme={currentTheme}
+            themeChangeCallback={handleThemeClassChange}
+          />
         </div>
         <Calculator />
       </div>
     </div>
   );
-}
+};
 
 export default App;

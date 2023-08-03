@@ -1,59 +1,59 @@
 .theme-1 {
-    --text-primary-color: hsl(0, 0%, 100%);
-    --text-secondary-color: hsl(221, 14%, 31%);
+  --text-primary-color: hsl(0, 0%, 100%);
+  --text-secondary-color: hsl(221, 14%, 31%);
 
-    --main-background: hsl(222, 26%, 31%);
-    --toggle-background: hsl(223, 31%, 20%);
-    --toggle-indicator-background: hsl(6, 63%, 50%);
-    --keypad-background: hsl(223, 31%, 20%);
-    --screen-background: hsl(224, 36%, 15%);
-    --key-standard-background: hsl(30, 25%, 89%);
-    --key-standard-shadow: hsl(28, 16%, 65%);
-    --key-standard-text-color: var(--text-secondary-color);
-    --key-equals-background: hsl(6, 63%, 50%);
-    --key-equals-shadow: hsl(6, 70%, 34%);
-    --key-equals-text-color: var(--text-primary-color);
-    --key-special-background: hsl(225, 21%, 49%);
-    --key-special-shadow: hsl(224, 28%, 35%);
-    --key-special-text-color: var(--text-primary-color);
+  --main-background: hsl(222, 26%, 31%);
+  --toggle-background: hsl(223, 31%, 20%);
+  --toggle-indicator-background: hsl(6, 63%, 50%);
+  --keypad-background: hsl(223, 31%, 20%);
+  --screen-background: hsl(224, 36%, 15%);
+  --key-standard-background: hsl(30, 25%, 89%);
+  --key-standard-shadow: hsl(28, 16%, 65%);
+  --key-standard-text-color: var(--text-secondary-color);
+  --key-equals-background: hsl(6, 63%, 50%);
+  --key-equals-shadow: hsl(6, 70%, 34%);
+  --key-equals-text-color: var(--text-primary-color);
+  --key-special-background: hsl(225, 21%, 49%);
+  --key-special-shadow: hsl(224, 28%, 35%);
+  --key-special-text-color: var(--text-primary-color);
 }
 
 .theme-2 {
-    --text-primary-color: hsl(60, 10%, 19%);
-    --text-secondary-color: hsl(0, 0%, 100%);
+  --text-primary-color: hsl(60, 10%, 19%);
+  --text-secondary-color: hsl(0, 0%, 100%);
 
-    --main-background: hsl(0, 0%, 90%);
-    --toggle-background: hsl(0, 5%, 81%);
-    --toggle-indicator-background: hsl(25, 98%, 40%);
-    --keypad-background: hsl(0, 5%, 81%);
-    --screen-background: hsl(0, 0%, 93%);
-    --key-standard-background: hsl(45, 7%, 89%);
-    --key-standard-shadow: hsl(35, 11%, 61%);
-    --key-standard-text-color: var(--text-primary-color);
-    --key-equals-background: hsl(25, 98%, 40%);
-    --key-equals-shadow: hsl(25, 99%, 27%);
-    --key-equals-text-color: var(--text-secondary-color);
-    --key-special-background: hsl(185, 42%, 37%);
-    --key-special-shadow: hsl(185, 58%, 25%);  
-    --key-special-text-color: var(--text-secondary-color);
+  --main-background: hsl(0, 0%, 90%);
+  --toggle-background: hsl(0, 5%, 81%);
+  --toggle-indicator-background: hsl(25, 98%, 40%);
+  --keypad-background: hsl(0, 5%, 81%);
+  --screen-background: hsl(0, 0%, 93%);
+  --key-standard-background: hsl(45, 7%, 89%);
+  --key-standard-shadow: hsl(35, 11%, 61%);
+  --key-standard-text-color: var(--text-primary-color);
+  --key-equals-background: hsl(25, 98%, 40%);
+  --key-equals-shadow: hsl(25, 99%, 27%);
+  --key-equals-text-color: var(--text-secondary-color);
+  --key-special-background: hsl(185, 42%, 37%);
+  --key-special-shadow: hsl(185, 58%, 25%);
+  --key-special-text-color: var(--text-secondary-color);
 }
 
 .theme-3 {
-    --text-primary-color: hsl(52, 100%, 62%);
-    --text-secondary-color: hsl(0, 0%, 100%);
+  --text-primary-color: hsl(52, 100%, 62%);
+  --text-secondary-color: hsl(0, 0%, 100%);
 
-    --main-background: hsl(268, 75%, 9%);
-    --toggle-background: hsl(268, 71%, 12%);
-    --toggle-indicator-background: hsl(176, 100%, 44%);
-    --keypad-background: hsl(268, 71%, 12%);
-    --screen-background: hsl(268, 71%, 12%);
-    --key-standard-background: hsl(268, 47%, 21%);
-    --key-standard-shadow: hsl(290, 70%, 36%);
-    --key-standard-text-color: var(--text-primary-color);
-    --key-equals-background: hsl(176, 100%, 44%);
-    --key-equals-shadow: hsl(177, 92%, 70%);
-    --key-equals-text-color: hsl(198, 20%, 13%);
-    --key-special-background: hsl(281, 89%, 26%);
-    --key-special-shadow: hsl(285, 91%, 52%);  
-    --key-special-text-color: var(--text-secondary-color);
+  --main-background: hsl(268, 75%, 9%);
+  --toggle-background: hsl(268, 71%, 12%);
+  --toggle-indicator-background: hsl(176, 100%, 44%);
+  --keypad-background: hsl(268, 71%, 12%);
+  --screen-background: hsl(268, 71%, 12%);
+  --key-standard-background: hsl(268, 47%, 21%);
+  --key-standard-shadow: hsl(290, 70%, 36%);
+  --key-standard-text-color: var(--text-primary-color);
+  --key-equals-background: hsl(176, 100%, 44%);
+  --key-equals-shadow: hsl(177, 92%, 70%);
+  --key-equals-text-color: hsl(198, 20%, 13%);
+  --key-special-background: hsl(281, 89%, 26%);
+  --key-special-shadow: hsl(285, 91%, 52%);
+  --key-special-text-color: var(--text-secondary-color);
 }

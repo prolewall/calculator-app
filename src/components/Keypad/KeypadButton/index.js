@@ -1,4 +1,4 @@
-import KeypadButton, {ButtonType} from "./keypadButton";
+import KeypadButton, { ButtonType } from "./keypadButton";
 
-export {ButtonType};
+export { ButtonType };
 export default KeypadButton;

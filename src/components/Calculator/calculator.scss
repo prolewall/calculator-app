@@ -1,9 +1,9 @@
-@import '/src/common/styles/variables.scss';
+@import "/src/common/styles/variables.scss";
 
 .Calculator {
-    width: 100%;
+  width: 100%;
 
-    .Keypad {
-        margin-top: $gutter-xl;
-    }
+  .Keypad {
+    margin-top: $gutter-xl;
+  }
 }
