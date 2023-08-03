@@ -3,76 +3,77 @@ import React, { useState } from 'react';
 import './calculator.scss';
 import Display from 'components/Display';
 import Keypad from 'components/Keypad';
-import { CalculatorOperation, MathematicalOperation } from 'constants/operationConstants';
+import { CalculatorOperation, MathematicalOperation, CalculatorInput, NumberInput, isNumberInput, isMathematicalOperation, isCalculatorOperation } from 'constants/operationConstants';
 
-
+function calculateUpdatedInput(currentInput: string, newInputValue: NumberInput): string {
+  if (newInputValue === ".") {
+    if (!currentInput.includes(".")) {
+      return currentInput.concat(newInputValue);
+    } else {
+      return currentInput;
+    }
+  } else {
+    if (currentInput === "0") {
+      return newInputValue;
+    } else {
+      return currentInput.concat(newInputValue);
+    }
+  }
+}
 
 const Calculator: React.FC = () => {
   const MAX_DIGITS = 15;
 
-  const [currentInput, setCurrentInput] = useState("0");
+  const [currentNumber, setCurrentNumber] = useState("0");
   const [previousResult, setPreviousResult] = useState<string | undefined>(undefined);
-  const [previousInput, setPreviousInput] = useState<string | undefined>(undefined);
+  const [previousNumber, setPreviousNumber] = useState<string | undefined>(undefined);
   const [currentOperation, setCurrentOperation] = useState<MathematicalOperation | undefined>(undefined);
-  const [justCalculated, setJustCalculated] = useState(false);
+  const [lastInput, setLastInput] = useState<CalculatorInput | undefined>(undefined);
 
-  const inputNumber = (value: string) => {
-    if (currentInput.length >= MAX_DIGITS) {
+
+  const handleNumberInput = (value: NumberInput) => {
+    if (currentNumber.length >= MAX_DIGITS) {
       return;
     }
-    if (justCalculated) {
-      if (previousInput !== undefined) {
-        setPreviousResult(currentInput);
-        setPreviousInput(undefined);
+
+    if (lastInput === CalculatorOperation.Calculate) {
+      setPreviousResult(undefined);
+      setPreviousNumber(undefined);
+      setCurrentOperation(undefined);
+
+      setCurrentNumber(calculateUpdatedInput("0", value));
+    } else if (isMathematicalOperation(lastInput)) {
+      if (previousNumber !== undefined) {
+        setPreviousResult(currentNumber);
+        setPreviousNumber(undefined);
         setCurrentOperation(undefined);
       }
 
-      if (value === ".") {
-        setCurrentInput("0.");
-      } else {
-        setCurrentInput(value);
-      }
-      setJustCalculated(false);
-      return;
-    } 
-    
-
-    if (value === ".") {
-      if (!currentInput.includes(".")) {
-        setCurrentInput(currentInput + value);
-      }
-    } else if (value === "0") {
-      if (currentInput !== "0" && currentInput !== "-") {
-        setCurrentInput(currentInput + value);
-      }
+      setCurrentNumber(calculateUpdatedInput("0", value));
     } else {
-      if (currentInput === "0") {
-        setCurrentInput(value);
-      } else {
-        setCurrentInput(currentInput + value);
-      }
+      setCurrentNumber(calculateUpdatedInput(currentNumber, value));
     }
-      
-    setJustCalculated(false);
     
+    setLastInput(value);
   }
 
   const deleteLastCharacter = () => {
-    if (!justCalculated) {
-      if (currentInput.length === 1) {
-        setCurrentInput("0");
+    if (!(isMathematicalOperation(lastInput) || lastInput === CalculatorOperation.Calculate)) {
+      if (currentNumber.length === 1) {
+        setCurrentNumber("0");
       } else {
-        setCurrentInput(currentInput.slice(0, -1));
+        setCurrentNumber(currentNumber.slice(0, -1));
       }
+      setLastInput(CalculatorOperation.Delete);
     }
   }
   
   const reset = () => {
-    setCurrentInput("0");
-    setPreviousInput(undefined);
+    setCurrentNumber("0");
+    setPreviousNumber(undefined);
     setPreviousResult(undefined);
     setCurrentOperation(undefined);
-    setJustCalculated(false);
+    setLastInput(undefined);
   }
 
   const calculateValue = (number1: string, operation: MathematicalOperation, number2: string): number => {
@@ -88,53 +89,39 @@ const Calculator: React.FC = () => {
 
   const handleCalculateOperation = () => {
     if (currentOperation === undefined || previousResult === undefined) {
-      setPreviousInput(currentInput);
+      setPreviousNumber(currentNumber);
       return;
     }
 
-    const newValue = previousInput !== undefined 
-      ? calculateValue(currentInput, currentOperation, previousInput) 
-      : calculateValue(previousResult, currentOperation, currentInput);
+    const newValue = previousNumber !== undefined 
+      ? calculateValue(currentNumber, currentOperation, previousNumber) 
+      : calculateValue(previousResult, currentOperation, currentNumber);
 
-    if (previousInput === undefined) {
-      setPreviousInput(currentInput);
+    if (previousNumber === undefined) {
+      setPreviousNumber(currentNumber);
     } else {
-      setPreviousResult(currentInput);
+      setPreviousResult(currentNumber);
     }
-    setCurrentInput(newValue.toString());
-    setJustCalculated(true);
+    setCurrentNumber(newValue.toString());
+    setLastInput(CalculatorOperation.Calculate);
   }
 
-  const inputMathematicalOperation = (operation: MathematicalOperation) => {
-    if (previousInput !== undefined) {
-      setPreviousInput(undefined);
-      setPreviousResult(currentInput); 
-    }
+  const handleMathematicalOperation = (operation: MathematicalOperation) => {
 
-
-    if (previousResult === undefined) {
-      setPreviousResult(currentInput);   
-      setCurrentOperation(operation); 
-      setJustCalculated(true);
-      return;
-    } else if (currentOperation === undefined) {
-      setCurrentOperation(operation); 
-      return;
-    }
-
-    if (!justCalculated && currentOperation) {
-
-      const newValue = calculateValue(previousResult, currentOperation, currentInput);
-
-      setPreviousResult(newValue.toString());
+    if (isMathematicalOperation(lastInput) || lastInput === CalculatorOperation.Calculate || currentOperation === undefined) {
+      setPreviousResult(currentNumber); 
+      setPreviousNumber(undefined);
+    } else {
+      const newValue = calculateValue(previousResult ?? "0", currentOperation, currentNumber);
       
-      setCurrentInput(newValue.toString());
-      setJustCalculated(true);
+      setPreviousResult(newValue.toString()); 
+      setCurrentNumber(newValue.toString());
     }
     setCurrentOperation(operation);
+    setLastInput(operation);
   }
 
-  const inputCalculatorOperation = (operation: CalculatorOperation) => {
+  const handleCalculatorOperation = (operation: CalculatorOperation) => {
     switch(operation) {
       case CalculatorOperation.Delete: deleteLastCharacter(); break;
       case CalculatorOperation.Reset: reset(); break;
@@ -142,12 +129,25 @@ const Calculator: React.FC = () => {
     }
   }
 
+  const handleInput = (input: CalculatorInput) => {
+    if (isNumberInput(input)) {
+      handleNumberInput(input);
+    }
+    else if (isMathematicalOperation(input)) {
+      handleMathematicalOperation(input);
+    } else if (isCalculatorOperation(input)) {
+      handleCalculatorOperation(input);
+    } else {
+      throw Error("Invalid input");
+    }
+  }
+
   return (
     <div className="Calculator">
       <Display 
-          currentInput={currentInput} previousResult={previousResult} previousInput={previousInput} operation={currentOperation}
+          currentInput={currentNumber} previousResult={previousResult} previousInput={previousNumber} operation={currentOperation}
         />
-      <Keypad numberInputCallback={inputNumber} calculatorOperationCallback={inputCalculatorOperation} mathematicalOperationCallback={inputMathematicalOperation}/>
+      <Keypad inputCallback={handleInput} />
     </div>
   );
 }
