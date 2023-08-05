@@ -1,8 +1,9 @@
-import "jest-canvas-mock";
 import { render, screen } from "@testing-library/react";
+import "jest-canvas-mock";
+
+import { MathematicalOperation } from "domain/types";
 
 import Display, { DisplayProps } from "./display";
-import { MathematicalOperation } from "domain/types";
 
 describe("Display", () => {
   const renderComponent = (props: DisplayProps) => {

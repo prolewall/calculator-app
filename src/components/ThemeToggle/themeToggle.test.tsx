@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+
 import ThemeToggle from "./themeToggle";
 
 describe("ThemeToggle", () => {

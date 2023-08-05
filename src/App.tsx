@@ -1,7 +1,8 @@
+import React, { useCallback, useState } from "react";
+
 import "./App.scss";
 import Calculator from "./components/Calculator";
 import ThemeToggle from "./components/ThemeToggle";
-import React, { useState, useCallback } from "react";
 
 const App = () => {
   const getInitialTheme = (): string => {
