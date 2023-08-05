@@ -10,7 +10,7 @@ describe("KeypadButton", () => {
         value={"7"}
         type={buttonType}
         onClickCallback={mockCallback}
-      />,
+      />
     );
   };
 
@@ -24,9 +24,9 @@ describe("KeypadButton", () => {
       renderButton(buttonType);
 
       expect(screen.getByRole("button")).toHaveClass(
-        `KeypadButton ${expectedClass}`,
+        `KeypadButton ${expectedClass}`
       );
-    },
+    }
   );
 
   it("should call callback function when clicked", async () => {

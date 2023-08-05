@@ -15,7 +15,7 @@ import {
 
 function calculateUpdatedInput(
   currentInput: string,
-  newInputValue: NumberInput,
+  newInputValue: NumberInput
 ): string {
   if (newInputValue === ".") {
     if (!currentInput.includes(".")) {
@@ -37,16 +37,16 @@ const Calculator: React.FC = () => {
 
   const [currentNumber, setCurrentNumber] = useState("0");
   const [previousResult, setPreviousResult] = useState<string | undefined>(
-    undefined,
+    undefined
   );
   const [previousNumber, setPreviousNumber] = useState<string | undefined>(
-    undefined,
+    undefined
   );
   const [currentOperation, setCurrentOperation] = useState<
     MathematicalOperation | undefined
   >(undefined);
   const [lastInput, setLastInput] = useState<CalculatorInput | undefined>(
-    undefined,
+    undefined
   );
 
   const handleNumberInput = (value: NumberInput) => {
@@ -102,7 +102,7 @@ const Calculator: React.FC = () => {
   const calculateValue = (
     number1: string,
     operation: MathematicalOperation,
-    number2: string,
+    number2: string
   ): number => {
     const value1 = parseFloat(number1);
     const value2 = parseFloat(number2);
@@ -150,7 +150,7 @@ const Calculator: React.FC = () => {
       const newValue = calculateValue(
         previousResult ?? "0",
         currentOperation,
-        currentNumber,
+        currentNumber
       );
 
       setPreviousResult(newValue.toString());

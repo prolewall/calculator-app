@@ -9,7 +9,7 @@ describe("ThemeToggle", () => {
       <ThemeToggle
         currentTheme={inititalTheme}
         themeChangeCallback={mockCallback}
-      />,
+      />
     );
   };
 

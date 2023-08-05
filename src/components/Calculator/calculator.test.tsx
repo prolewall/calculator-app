@@ -12,7 +12,7 @@ describe("Calculator", () => {
   const testInputs = async (
     inputs: string[],
     expectedCurrentInput: string,
-    expectedCalculation: string,
+    expectedCalculation: string
   ) => {
     inputs.forEach((input) => {
       const keypadButton = screen.getByRole("button", { name: input });
@@ -161,6 +161,6 @@ describe("Calculator", () => {
       renderComponent();
 
       await testInputs(inputs, expectedCurrentInput, expectedCalculation);
-    },
+    }
   );
 });
