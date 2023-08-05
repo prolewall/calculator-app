@@ -6,7 +6,7 @@ export enum MathematicalOperation {
 }
 
 export const isMathematicalOperation = (
-  value: any,
+  value: any
 ): value is MathematicalOperation =>
   Object.values(MathematicalOperation).includes(value);
 
@@ -17,7 +17,7 @@ export enum CalculatorOperation {
 }
 
 export const isCalculatorOperation = (
-  value: any,
+  value: any
 ): value is CalculatorOperation =>
   Object.values(CalculatorOperation).includes(value);
 

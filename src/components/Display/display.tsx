@@ -21,7 +21,7 @@ function getTextWidth(canvas: HTMLCanvasElement, text: string): number {
 function calculateFontSize(
   canvas: HTMLCanvasElement,
   containerWidth: number,
-  text: string,
+  text: string
 ): number {
   const textWidth = getTextWidth(canvas, text);
   return textWidth <= containerWidth ? 1 : containerWidth / textWidth;
@@ -70,7 +70,7 @@ const Display: React.FC<DisplayProps> = ({
     setDisplayWidth(
       totalWidth -
         parseFloat(style.paddingRight) -
-        parseFloat(style.paddingLeft),
+        parseFloat(style.paddingLeft)
     );
   }, [displayWidth]);
 
