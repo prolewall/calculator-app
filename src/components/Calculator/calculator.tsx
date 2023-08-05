@@ -11,7 +11,7 @@ import {
   isNumberInput,
   isMathematicalOperation,
   isCalculatorOperation,
-} from "constants/operationConstants";
+} from "domain/types";
 
 function calculateUpdatedInput(
   currentInput: string,

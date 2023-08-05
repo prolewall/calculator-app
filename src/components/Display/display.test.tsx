@@ -2,7 +2,7 @@ import "jest-canvas-mock";
 import { render, screen } from "@testing-library/react";
 
 import Display, { DisplayProps } from "./display";
-import { MathematicalOperation } from "constants/operationConstants";
+import { MathematicalOperation } from "domain/types";
 
 describe("Display", () => {
   const renderComponent = (props: DisplayProps) => {

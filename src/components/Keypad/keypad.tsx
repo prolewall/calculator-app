@@ -4,7 +4,7 @@ import {
   CalculatorOperation,
   MathematicalOperation,
   CalculatorInput,
-} from "constants/operationConstants";
+} from "domain/types";
 
 interface KeypadProps {
   inputCallback: (value: CalculatorInput) => void;
