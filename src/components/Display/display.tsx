@@ -1,6 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import "./display.scss";
+
 import { MathematicalOperation } from "domain/types";
+
+import "./display.scss";
 
 export interface DisplayProps {
   currentInput: string;

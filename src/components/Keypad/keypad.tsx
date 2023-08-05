@@ -1,10 +1,11 @@
-import "./keypad.scss";
-import KeypadButton, { ButtonType } from "./KeypadButton";
 import {
+  CalculatorInput,
   CalculatorOperation,
   MathematicalOperation,
-  CalculatorInput,
 } from "domain/types";
+
+import KeypadButton, { ButtonType } from "./KeypadButton";
+import "./keypad.scss";
 
 interface KeypadProps {
   inputCallback: (value: CalculatorInput) => void;

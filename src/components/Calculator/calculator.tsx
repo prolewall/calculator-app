@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 
-import "./calculator.scss";
 import Display from "components/Display";
 import Keypad from "components/Keypad";
+
 import {
+  CalculatorInput,
   CalculatorOperation,
   MathematicalOperation,
-  CalculatorInput,
   NumberInput,
-  isNumberInput,
-  isMathematicalOperation,
   isCalculatorOperation,
+  isMathematicalOperation,
+  isNumberInput,
 } from "domain/types";
+
+import "./calculator.scss";
 
 function calculateUpdatedInput(
   currentInput: string,

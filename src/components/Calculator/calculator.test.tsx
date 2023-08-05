@@ -1,8 +1,8 @@
-import "jest-canvas-mock";
 import { render, screen, waitFor } from "@testing-library/react";
+import "jest-canvas-mock";
+import { act } from "react-dom/test-utils";
 
 import Calculator from "./calculator";
-import { act } from "react-dom/test-utils";
 
 describe("Calculator", () => {
   const renderComponent = () => {
