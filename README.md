@@ -6,7 +6,7 @@ It is a simple calculator cpp with basic add, subtract, multiply and divide oper
 
 It is created in React and uses TypeScript and Sass.
 
-The app _will be_ hosted on GitHub Pages: **TODO**
+The app is hosted on GitHub Pages: https://prolewall.github.io/calculator-app/
 
 ## Local Development
 
