@@ -2,7 +2,7 @@
 
 This project was created as a [challenge](https://www.frontendmentor.io/challenges/calculator-app-9lteq5N29) for [Frontend Mentor](https://www.frontendmentor.io).
 
-It is a simple calculator cpp with basic add, subtract, multiply and divide operations, along with a few other features inspired by Windows calculator app. The design for the app were provided in the challenge.
+It is a simple calculator cpp with basic add, subtract, multiply and divide operations, along with a few other features inspired by Windows calculator app. The designs for the app were provided in the challenge.
 
 It is created in React and uses TypeScript and Sass.
 
