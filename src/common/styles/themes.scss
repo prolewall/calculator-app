@@ -16,6 +16,8 @@
   --key-special-background: hsl(225, 21%, 49%);
   --key-special-shadow: hsl(224, 28%, 35%);
   --key-special-text-color: var(--text-primary-color);
+  --about-background: hsl(223, 31%, 20%);
+  --about-text-color: var(--text-primary-color);
 }
 
 .theme-2 {
@@ -36,6 +38,8 @@
   --key-special-background: hsl(185, 42%, 37%);
   --key-special-shadow: hsl(185, 58%, 25%);
   --key-special-text-color: var(--text-secondary-color);
+  --about-background: hsl(0, 5%, 81%);
+  --about-text-color: var(--text-primary-color);
 }
 
 .theme-3 {
@@ -56,4 +60,6 @@
   --key-special-background: hsl(281, 89%, 26%);
   --key-special-shadow: hsl(285, 91%, 52%);
   --key-special-text-color: var(--text-secondary-color);
+  --about-background: hsl(268, 71%, 12%);
+  --about-text-color: var(--text-primary-color);
 }
