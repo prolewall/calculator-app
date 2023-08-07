@@ -1,5 +1,7 @@
 import React, { useCallback, useState } from "react";
 
+import AboutBanner from "components/AboutBanner";
+
 import "./App.scss";
 import Calculator from "./components/Calculator";
 import ThemeToggle from "./components/ThemeToggle";
@@ -32,6 +34,7 @@ const App = () => {
 
   return (
     <div data-testid="App" className={`App ${currentTheme}`}>
+      <AboutBanner />
       <div className="App__content">
         <div className="App__settings">
           <p className="App__name">calc</p>

@@ -1,0 +1,60 @@
+@media (max-width: 400px) {
+  .AboutBanner {
+    font-size: 0.5rem;
+  }
+}
+
+@media (min-width: 400px) {
+  .AboutBanner {
+    font-size: 0.8rem;
+  }
+}
+
+.AboutBanner {
+  position: fixed;
+  top: 0;
+  right: 0;
+
+  background-color: var(--about-background);
+  color: var(--about-text-color);
+  padding: 5px 10px 10px 10px;
+
+  &.hidden {
+    transform: translateX(100%);
+  }
+
+  &.visible {
+    transform: translateX(0);
+  }
+
+  transition: transform 0.5s;
+}
+
+.AboutBanner__toggle {
+  width: 25px;
+  height: 25px;
+  padding: 5px;
+  background-color: inherit;
+
+  position: absolute;
+  right: 100%;
+  top: 0;
+
+  input[type="checkbox"] {
+    appearance: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: 0;
+
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
+}
+
+.AboutBanner__icon {
+  fill: var(--about-text-color);
+  width: 100%;
+  height: 100%;
+}
