@@ -1,3 +1,5 @@
+import { useEffect, useMemo, useRef } from "react";
+
 import {
   CalculatorInput,
   CalculatorOperation,
@@ -11,105 +13,124 @@ interface KeypadProps {
   inputCallback: (value: CalculatorInput) => void;
 }
 
+interface ButtonDefinition {
+  value: CalculatorInput;
+  displayValue?: string;
+  type?: ButtonType;
+  associatedKeys?: string[];
+  id?: string;
+}
+
 const Keypad: React.FC<KeypadProps> = ({ inputCallback }) => {
+  const handleKeyPress = (event: KeyboardEvent) => {
+    const associatedButton = getMap().get(getButtonRefKey(event.key));
+
+    if (associatedButton) {
+      associatedButton.focus();
+      associatedButton.click();
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyPress);
+
+    return () => window.removeEventListener("keydown", handleKeyPress);
+  });
+
+  const buttonsRef = useRef<Map<string, HTMLButtonElement> | null>(null);
+
+  const buttonDefinitions: ButtonDefinition[] = useMemo(
+    () => [
+      { value: "7" },
+      { value: "8" },
+      { value: "9" },
+      {
+        value: CalculatorOperation.Delete,
+        type: ButtonType.Special,
+        displayValue: "DEL",
+        associatedKeys: ["Backspace"],
+      },
+      { value: "4" },
+      { value: "5" },
+      { value: "6" },
+      {
+        value: MathematicalOperation.Add,
+        type: ButtonType.Standard,
+        displayValue: "+",
+      },
+      { value: "1" },
+      { value: "2" },
+      { value: "3" },
+      {
+        value: MathematicalOperation.Subtract,
+        type: ButtonType.Standard,
+        displayValue: "-",
+      },
+      { value: "." },
+      { value: "0" },
+      {
+        value: MathematicalOperation.Divide,
+        type: ButtonType.Standard,
+        displayValue: "/",
+      },
+      {
+        value: MathematicalOperation.Multiply,
+        type: ButtonType.Standard,
+        displayValue: "x",
+        associatedKeys: ["*", "x"],
+      },
+      {
+        value: CalculatorOperation.Reset,
+        type: ButtonType.Special,
+        displayValue: "RESET",
+        id: "reset-button",
+        associatedKeys: ["Delete"],
+      },
+      {
+        value: CalculatorOperation.Calculate,
+        type: ButtonType.Equals,
+        displayValue: "=",
+        id: "equals-button",
+      },
+    ],
+    []
+  );
+
+  function getMap(): Map<string, HTMLButtonElement> {
+    if (!buttonsRef.current) {
+      buttonsRef.current = new Map();
+    }
+    return buttonsRef.current;
+  }
+
+  function getButtonRefKey(key: string) {
+    return `KeypadButton-${key}`;
+  }
+
   return (
     <div className="Keypad">
-      <KeypadButton
-        value={"7"}
-        type={ButtonType.Standard}
-        onClickCallback={() => inputCallback("7")}
-      />
-      <KeypadButton
-        value={"8"}
-        type={ButtonType.Standard}
-        onClickCallback={() => inputCallback("8")}
-      />
-      <KeypadButton
-        value={"9"}
-        type={ButtonType.Standard}
-        onClickCallback={() => inputCallback("9")}
-      />
-      <KeypadButton
-        value={"DEL"}
-        type={ButtonType.Special}
-        onClickCallback={() => inputCallback(CalculatorOperation.Delete)}
-      />
-
-      <KeypadButton
-        value={"4"}
-        type={ButtonType.Standard}
-        onClickCallback={() => inputCallback("4")}
-      />
-      <KeypadButton
-        value={"5"}
-        type={ButtonType.Standard}
-        onClickCallback={() => inputCallback("5")}
-      />
-      <KeypadButton
-        value={"6"}
-        type={ButtonType.Standard}
-        onClickCallback={() => inputCallback("6")}
-      />
-      <KeypadButton
-        value={"+"}
-        type={ButtonType.Standard}
-        onClickCallback={() => inputCallback(MathematicalOperation.Add)}
-      />
-
-      <KeypadButton
-        value={"1"}
-        type={ButtonType.Standard}
-        onClickCallback={() => inputCallback("1")}
-      />
-      <KeypadButton
-        value={"2"}
-        type={ButtonType.Standard}
-        onClickCallback={() => inputCallback("2")}
-      />
-      <KeypadButton
-        value={"3"}
-        type={ButtonType.Standard}
-        onClickCallback={() => inputCallback("3")}
-      />
-      <KeypadButton
-        value={"-"}
-        type={ButtonType.Standard}
-        onClickCallback={() => inputCallback(MathematicalOperation.Subtract)}
-      />
-
-      <KeypadButton
-        value={"."}
-        type={ButtonType.Standard}
-        onClickCallback={() => inputCallback(".")}
-      />
-      <KeypadButton
-        value={"0"}
-        type={ButtonType.Standard}
-        onClickCallback={() => inputCallback("0")}
-      />
-      <KeypadButton
-        value={"/"}
-        type={ButtonType.Standard}
-        onClickCallback={() => inputCallback(MathematicalOperation.Divide)}
-      />
-      <KeypadButton
-        value={"x"}
-        type={ButtonType.Standard}
-        onClickCallback={() => inputCallback(MathematicalOperation.Multiply)}
-      />
-
-      <KeypadButton
-        value={"RESET"}
-        type={ButtonType.Special}
-        onClickCallback={() => inputCallback(CalculatorOperation.Reset)}
-        id="reset-button"
-      />
-      <KeypadButton
-        value={"="}
-        type={ButtonType.Equals}
-        onClickCallback={() => inputCallback(CalculatorOperation.Calculate)}
-        id="equals-button"
-      />
+      {buttonDefinitions.map((definition, index) => (
+        <KeypadButton
+          value={definition.displayValue ?? definition.value}
+          type={definition.type ?? ButtonType.Standard}
+          onClickCallback={() => inputCallback(definition.value)}
+          key={`KeypadButton-${index}`}
+          ref={(node) => {
+            const map = getMap();
+            const associatedKeys = definition.associatedKeys ?? [
+              definition.displayValue ?? definition.value,
+            ];
+            associatedKeys.forEach((key) => {
+              if (node) {
+                map.set(getButtonRefKey(key), node);
+              } else {
+                map.delete(getButtonRefKey(key));
+              }
+            });
+          }}
+          id={definition.id}
+        />
+      ))}
     </div>
   );
 };
