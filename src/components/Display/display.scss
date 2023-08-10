@@ -22,10 +22,11 @@ $height: 100px;
   font-size: 50px;
   font-weight: bold;
   transform-origin: bottom right;
+  white-space: nowrap;
 }
 
 .Display__calculation {
-  font-size: 0.5rem;
+  font-size: 0.4rem;
   position: absolute;
   right: $gutter-xl;
   top: 10px;

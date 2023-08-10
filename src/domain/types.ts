@@ -41,4 +41,11 @@ export const isNumberInput = (value: any): value is NumberInput =>
 export type CalculatorInput =
   | MathematicalOperation
   | CalculatorOperation
-  | NumberInput;
+  | NumberInput
+  | Error;
+
+export interface Calculation {
+  leftOperand?: string;
+  operator?: MathematicalOperation;
+  rightOperand?: string;
+}

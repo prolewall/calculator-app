@@ -132,6 +132,18 @@ describe("Calculator", () => {
     ["should multiply", ["6", "x", "4", "="], "24", "6 x 4 ="],
     ["should divide", ["6", "/", "4", "="], "1.5", "6 / 4 ="],
     [
+      "should display error after divide by 0",
+      ["6", "/", "0", "="],
+      "Can't divide by 0",
+      "6 /",
+    ],
+    [
+      "should input new number after error",
+      ["6", "/", "0", "=", "3"],
+      "3",
+      "6 /",
+    ],
+    [
       "should delete last input when delete action called",
       ["1", "2", ".", "3", "5", "DEL"],
       "12.3",
