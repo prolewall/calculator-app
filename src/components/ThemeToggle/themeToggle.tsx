@@ -13,7 +13,12 @@ const ThemeToggle: React.FC<ThemeToggleProps> = ({
     <div className="ThemeToggle">
       <p className="ThemeToggle__label">THEME</p>
       <div className="ThemeToggle__toggle">
-        <label htmlFor="theme-1">
+        <div className="ThemeToggle__toggle-labels">
+          <label htmlFor="theme-1">1</label>
+          <label htmlFor="theme-2">2</label>
+          <label htmlFor="theme-3">3</label>
+        </div>
+        <div className="ThemeToggle__toggle-inputs">
           <input
             type="radio"
             id="theme-1"
@@ -22,9 +27,6 @@ const ThemeToggle: React.FC<ThemeToggleProps> = ({
             defaultChecked={currentTheme === "theme-1"}
             onChange={(event) => themeChangeCallback(event.target.value)}
           />
-          <span></span>
-        </label>
-        <label htmlFor="theme-2">
           <input
             type="radio"
             id="theme-2"
@@ -33,9 +35,6 @@ const ThemeToggle: React.FC<ThemeToggleProps> = ({
             defaultChecked={currentTheme === "theme-2"}
             onChange={(event) => themeChangeCallback(event.target.value)}
           />
-          <span></span>
-        </label>
-        <label htmlFor="theme-3">
           <input
             type="radio"
             id="theme-3"
@@ -44,8 +43,7 @@ const ThemeToggle: React.FC<ThemeToggleProps> = ({
             defaultChecked={currentTheme === "theme-3"}
             onChange={(event) => themeChangeCallback(event.target.value)}
           />
-          <span></span>
-        </label>
+        </div>
       </div>
     </div>
   );
