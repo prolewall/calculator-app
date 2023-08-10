@@ -52,10 +52,6 @@ const Calculator: React.FC = () => {
   const [lastInput, setLastInput] = useState<CalculatorInput | Error>("0");
 
   const handleNumberInput = (value: NumberInput) => {
-    if (currentNumber.length >= MAX_DIGITS) {
-      return;
-    }
-
     if (lastInput === CalculatorOperation.Calculate) {
       setPreviousResult(undefined);
       setPreviousNumber(undefined);
@@ -71,7 +67,9 @@ const Calculator: React.FC = () => {
 
       setCurrentNumber(calculateUpdatedInput("0", value));
     } else {
-      setCurrentNumber(calculateUpdatedInput(currentNumber, value));
+      if (currentNumber.length < MAX_DIGITS) {
+        setCurrentNumber(calculateUpdatedInput(currentNumber, value));
+      }
     }
 
     setLastInput(value);
