@@ -29,7 +29,7 @@ export function calculateResult(
 ): string {
   const leftOperand = Big(number1);
   const rightOperand = Big(number2);
-  return parseFloat(
-    calculate(leftOperand, operation, rightOperand).toFixed(15)
+  return Big(
+    calculate(leftOperand, operation, rightOperand).toPrecision(15)
   ).toString();
 }
