@@ -49,7 +49,7 @@ const Calculator: React.FC = () => {
   const [currentOperation, setCurrentOperation] = useState<
     MathematicalOperation | undefined
   >(undefined);
-  const [lastInput, setLastInput] = useState<CalculatorInput>("0");
+  const [lastInput, setLastInput] = useState<CalculatorInput | Error>("0");
 
   const handleNumberInput = (value: NumberInput) => {
     if (currentNumber.length >= MAX_DIGITS) {

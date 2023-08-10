@@ -41,8 +41,7 @@ export const isNumberInput = (value: any): value is NumberInput =>
 export type CalculatorInput =
   | MathematicalOperation
   | CalculatorOperation
-  | NumberInput
-  | Error;
+  | NumberInput;
 
 export interface Calculation {
   leftOperand?: string;
