@@ -2,7 +2,7 @@
 
 .ThemeToggle {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
 
   color: var(--text-primary-color);
   font-size: 0.3rem;
@@ -11,49 +11,38 @@
 
 .ThemeToggle__label {
   margin-right: $gutter-xl;
+  line-height: 18px;
 }
 
-.ThemeToggle__toggle {
+.ThemeToggle__toggle-labels {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 8px 2px 8px;
+}
+
+.ThemeToggle__toggle-inputs {
   background-color: var(--toggle-background);
   display: flex;
   gap: 2px;
-  height: fit-content;
   padding: 3px;
   border-radius: 10px;
   cursor: pointer;
-
-  counter-reset: theme-counter;
-}
-
-label {
-  counter-increment: theme-counter;
-  position: relative;
-
-  &::before {
-    content: counter(theme-counter);
-    display: inline-block;
-    position: absolute;
-    bottom: calc(100% + $gutter-s);
-    left: 50%;
-    transform: translateX(-50%);
-  }
 }
 
 input[type="radio"] {
-  display: none;
-}
-
-input[type="radio"] ~ span {
-  width: 10px;
-  height: 10px;
-  border: 1px solid transparent;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  margin: 0;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
-  background: var(--toggle-indicator-background);
-  display: block;
+  border: 1px solid transparent;
   cursor: pointer;
+  background-color: var(--toggle-indicator-background);
   opacity: 0;
-}
 
-label input[type="radio"]:checked ~ span {
-  opacity: 1;
+  &:checked {
+    opacity: 1;
+  }
 }
