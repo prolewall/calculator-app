@@ -1,14 +1,17 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
-import { MathematicalOperation } from "domain/types";
+import {
+  Calculation,
+  CalculatorInput,
+  CalculatorOperation,
+} from "domain/types";
 
 import "./display.scss";
 
 export interface DisplayProps {
-  currentInput: string;
-  previousResult?: string;
-  previousInput?: string;
-  operation?: MathematicalOperation;
+  currentOutput: string;
+  calculation: Calculation;
+  lastInput: CalculatorInput;
 }
 
 function getTextWidth(canvas: HTMLCanvasElement, text: string): number {
@@ -20,7 +23,7 @@ function getTextWidth(canvas: HTMLCanvasElement, text: string): number {
   return metrics.width;
 }
 
-function calculateFontSize(
+function calculateOutputScale(
   canvas: HTMLCanvasElement,
   containerWidth: number,
   text: string
@@ -29,31 +32,50 @@ function calculateFontSize(
   return textWidth <= containerWidth ? 1 : containerWidth / textWidth;
 }
 
-function getInputWithCommas(currentInput: string): string {
+function formatNumber(number: string): string {
   let integerPart, decimalPart;
-  [integerPart, decimalPart] = currentInput.split(".");
+  [integerPart, decimalPart] = number.split(".");
   const integerNumberPart = parseInt(integerPart);
 
-  let resultString = integerNumberPart.toLocaleString("en-US");
+  let result = integerNumberPart.toLocaleString("en-US");
   if (decimalPart) {
-    resultString = resultString.concat(".", decimalPart);
+    result = result.concat(".", decimalPart);
   }
-  if (currentInput.endsWith(".")) {
-    resultString = resultString.concat(".");
+  if (number.endsWith(".")) {
+    result = result.concat(".");
   }
-  return resultString;
+  return result;
+}
+
+function formatOutput(
+  currentOutput: string,
+  lastInput: CalculatorInput
+): string {
+  if (lastInput instanceof Error) {
+    return lastInput.message;
+  } else {
+    return formatNumber(currentOutput);
+  }
+}
+
+function formatCalculation(
+  calculation: Calculation,
+  lastInput: CalculatorInput
+) {
+  return `${calculation.leftOperand ?? ""} ${calculation.operator ?? ""}${
+    lastInput === CalculatorOperation.Calculate
+      ? ` ${calculation.rightOperand} =`
+      : ""
+  }`;
 }
 
 const Display: React.FC<DisplayProps> = ({
-  currentInput,
-  previousResult,
-  previousInput,
-  operation,
+  currentOutput,
+  calculation,
+  lastInput,
 }) => {
-  const calculationString = `${previousResult ?? ""} ${operation ?? ""}${
-    previousInput !== undefined ? ` ${previousInput} =` : ""
-  }`;
-  const inputString = getInputWithCommas(currentInput);
+  const calculationString = formatCalculation(calculation, lastInput);
+  const inputString = formatOutput(currentOutput, lastInput);
   const canvas = useMemo(() => {
     const canvas = document.createElement("canvas");
     const context = canvas.getContext("2d");
@@ -76,7 +98,7 @@ const Display: React.FC<DisplayProps> = ({
     );
   }, [displayWidth]);
 
-  const inputFontSize = calculateFontSize(canvas, displayWidth, inputString);
+  const outputScale = calculateOutputScale(canvas, displayWidth, inputString);
 
   return (
     <div className="Display" ref={ref}>
@@ -86,7 +108,7 @@ const Display: React.FC<DisplayProps> = ({
       <p
         data-testid="Display-current-input"
         className="Display__currentInput"
-        style={{ scale: `${inputFontSize}` }}
+        style={{ scale: `${outputScale}` }}
       >
         {inputString}
       </p>
