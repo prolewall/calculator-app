@@ -11,7 +11,7 @@ import "./display.scss";
 export interface DisplayProps {
   currentOutput: string;
   calculation: Calculation;
-  lastInput: CalculatorInput;
+  lastInput: CalculatorInput | Error;
 }
 
 function getTextWidth(canvas: HTMLCanvasElement, text: string): number {
@@ -49,7 +49,7 @@ function formatNumber(number: string): string {
 
 function formatOutput(
   currentOutput: string,
-  lastInput: CalculatorInput
+  lastInput: CalculatorInput | Error
 ): string {
   if (lastInput instanceof Error) {
     return lastInput.message;
@@ -60,7 +60,7 @@ function formatOutput(
 
 function formatCalculation(
   calculation: Calculation,
-  lastInput: CalculatorInput
+  lastInput: CalculatorInput | Error
 ) {
   return `${calculation.leftOperand ?? ""} ${calculation.operator ?? ""}${
     lastInput === CalculatorOperation.Calculate
