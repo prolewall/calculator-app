@@ -156,7 +156,19 @@ describe("Calculator", () => {
     ["should add", ["6", "+", "4", "="], "10", "6 + 4 ="],
     ["should subtract", ["2", "-", "4", "="], "-2", "2 - 4 ="],
     ["should multiply", ["6", "x", "4", "="], "24", "6 x 4 ="],
+    [
+      "should multiply multiple times to high exponent",
+      ["1", "0", "x"].concat(Array(30).fill("=")),
+      "1e+31",
+      "1e+30 x 10 =",
+    ],
     ["should divide", ["6", "/", "4", "="], "1.5", "6 / 4 ="],
+    [
+      "should divide multiple times with many decimal places",
+      ["1", "0", "/"].concat(Array(30).fill("=")),
+      "1e-29",
+      "1e-28 / 10 =",
+    ],
     [
       "should display error after divide by 0",
       ["6", "/", "0", "="],

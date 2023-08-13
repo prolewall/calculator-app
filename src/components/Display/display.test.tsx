@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import Big from "big.js";
 import "jest-canvas-mock";
 
 import { CalculatorOperation, MathematicalOperation } from "domain/types";
@@ -12,7 +13,7 @@ describe("Display", () => {
 
   it("should correctly display formatted current input", () => {
     renderComponent({
-      currentOutput: "10000345.23455",
+      currentInput: "10000345.23455",
       lastInput: "5",
       calculation: {},
     });
@@ -24,10 +25,10 @@ describe("Display", () => {
 
   it("should correctly display calculation", () => {
     renderComponent({
-      currentOutput: "0",
+      currentInput: "0",
       lastInput: MathematicalOperation.Add,
       calculation: {
-        leftOperand: "12.34",
+        leftOperand: Big("12.34"),
         operator: MathematicalOperation.Add,
       },
     });
@@ -38,12 +39,12 @@ describe("Display", () => {
 
   it("should correctly display calculation after calculate operation", () => {
     renderComponent({
-      currentOutput: "0",
+      currentInput: "0",
       lastInput: CalculatorOperation.Calculate,
       calculation: {
-        leftOperand: "12.34",
+        leftOperand: Big("12.34"),
         operator: MathematicalOperation.Multiply,
-        rightOperand: "3",
+        rightOperand: Big("3"),
       },
     });
 
@@ -54,7 +55,7 @@ describe("Display", () => {
   it("should display error message when output not a number", () => {
     renderComponent({
       lastInput: new Error("Can't divide by 0"),
-      currentOutput: "",
+      currentInput: "",
       calculation: {},
     });
 

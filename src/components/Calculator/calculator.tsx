@@ -1,3 +1,4 @@
+import Big from "big.js";
 import React, { useState } from "react";
 
 import Display from "components/Display";
@@ -37,38 +38,28 @@ function calculateUpdatedInput(
 }
 
 const Calculator: React.FC = () => {
+  Big.NE = -15;
+  Big.DP = 1e6;
   const MAX_DIGITS = 15;
 
-  const [currentNumber, setCurrentNumber] = useState("0");
-  const [previousResult, setPreviousResult] = useState<string | undefined>(
-    undefined
-  );
-  const [previousNumber, setPreviousNumber] = useState<string | undefined>(
-    undefined
-  );
-  const [currentOperation, setCurrentOperation] = useState<
-    MathematicalOperation | undefined
-  >(undefined);
+  const [currentInput, setCurrentInput] = useState("0");
+  const [calculation, setCalculation] = useState<Calculation>({});
   const [lastInput, setLastInput] = useState<CalculatorInput | Error>("0");
 
   const handleNumberInput = (value: NumberInput) => {
     if (lastInput === CalculatorOperation.Calculate) {
-      setPreviousResult(undefined);
-      setPreviousNumber(undefined);
-      setCurrentOperation(undefined);
+      setCalculation({});
 
-      setCurrentNumber(calculateUpdatedInput("0", value));
+      setCurrentInput(calculateUpdatedInput("0", value));
     } else if (isMathematicalOperation(lastInput)) {
-      if (previousNumber !== undefined) {
-        setPreviousResult(currentNumber);
-        setPreviousNumber(undefined);
-        setCurrentOperation(undefined);
+      if (calculation.rightOperand !== undefined) {
+        setCalculation({ leftOperand: Big(currentInput) });
       }
 
-      setCurrentNumber(calculateUpdatedInput("0", value));
+      setCurrentInput(calculateUpdatedInput("0", value));
     } else {
-      if (currentNumber.length < MAX_DIGITS) {
-        setCurrentNumber(calculateUpdatedInput(currentNumber, value));
+      if (currentInput.length < MAX_DIGITS) {
+        setCurrentInput(calculateUpdatedInput(currentInput, value));
       }
     }
 
@@ -82,62 +73,77 @@ const Calculator: React.FC = () => {
         lastInput === CalculatorOperation.Calculate
       )
     ) {
-      if (currentNumber.length === 1) {
-        setCurrentNumber("0");
+      if (currentInput.length === 1) {
+        setCurrentInput("0");
       } else {
-        setCurrentNumber(currentNumber.slice(0, -1));
+        setCurrentInput(currentInput.slice(0, -1));
       }
       setLastInput(CalculatorOperation.Delete);
     }
   };
 
   const reset = () => {
-    setCurrentNumber("0");
-    setPreviousNumber(undefined);
-    setPreviousResult(undefined);
-    setCurrentOperation(undefined);
+    setCurrentInput("0");
+    setCalculation({});
     setLastInput(CalculatorOperation.Reset);
   };
 
   const handleCalculateOperation = () => {
     setLastInput(CalculatorOperation.Calculate);
-    if (currentOperation === undefined || previousResult === undefined) {
-      setPreviousNumber(currentNumber);
+    if (
+      calculation.operator === undefined ||
+      calculation.leftOperand === undefined
+    ) {
+      setCalculation({
+        rightOperand: Big(currentInput),
+        result: Big(currentInput),
+      });
       return;
     }
 
-    const newValue =
-      previousNumber !== undefined
-        ? calculateResult(currentNumber, currentOperation, previousNumber)
-        : calculateResult(previousResult, currentOperation, currentNumber);
-
-    if (previousNumber === undefined) {
-      setPreviousNumber(currentNumber);
+    if (lastInput === CalculatorOperation.Calculate) {
+      const resultCalculation = calculateResult(
+        calculation.result ?? Big(0),
+        calculation.operator,
+        calculation.rightOperand ?? Big(0)
+      );
+      setCalculation(resultCalculation);
+      setCurrentInput(resultCalculation.result?.toString() ?? "");
     } else {
-      setPreviousResult(currentNumber);
+      const resultCalculation = calculateResult(
+        calculation.leftOperand ?? Big(0),
+        calculation.operator,
+        Big(currentInput)
+      );
+      setCalculation(resultCalculation);
+      setCurrentInput(resultCalculation.result?.toString() ?? "");
     }
-    setCurrentNumber(newValue);
   };
 
   const handleMathematicalOperation = (operation: MathematicalOperation) => {
     if (
       isMathematicalOperation(lastInput) ||
       lastInput === CalculatorOperation.Calculate ||
-      currentOperation === undefined
+      calculation.operator === undefined
     ) {
-      setPreviousResult(currentNumber);
-      setPreviousNumber(undefined);
+      setCalculation({
+        leftOperand: Big(currentInput),
+        operator: operation,
+        result: Big(currentInput),
+      });
     } else {
-      const newValue = calculateResult(
-        previousResult ?? "0",
-        currentOperation,
-        currentNumber
+      const resultCalculation = calculateResult(
+        calculation.leftOperand ?? Big(0),
+        calculation.operator,
+        Big(currentInput)
       );
-
-      setPreviousResult(newValue);
-      setCurrentNumber(newValue);
+      setCalculation({
+        leftOperand: resultCalculation.result,
+        operator: operation,
+        result: resultCalculation.result,
+      });
+      setCurrentInput(resultCalculation.result?.toString() ?? "");
     }
-    setCurrentOperation(operation);
     setLastInput(operation);
   };
 
@@ -175,16 +181,10 @@ const Calculator: React.FC = () => {
     }
   };
 
-  const calculation: Calculation = {
-    leftOperand: previousResult,
-    operator: currentOperation,
-    rightOperand: previousNumber,
-  };
-
   return (
     <div className="Calculator">
       <Display
-        currentOutput={currentNumber}
+        currentInput={currentInput}
         calculation={calculation}
         lastInput={lastInput}
       />
