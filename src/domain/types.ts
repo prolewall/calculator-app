@@ -1,3 +1,5 @@
+import Big from "big.js";
+
 export enum MathematicalOperation {
   Add = "+",
   Subtract = "-",
@@ -44,7 +46,8 @@ export type CalculatorInput =
   | NumberInput;
 
 export interface Calculation {
-  leftOperand?: string;
+  leftOperand?: Big;
   operator?: MathematicalOperation;
-  rightOperand?: string;
+  rightOperand?: Big;
+  result?: Big;
 }

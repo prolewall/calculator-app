@@ -1,15 +1,17 @@
+import Big from "big.js";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
 import {
   Calculation,
   CalculatorInput,
   CalculatorOperation,
+  isMathematicalOperation,
 } from "domain/types";
 
 import "./display.scss";
 
 export interface DisplayProps {
-  currentOutput: string;
+  currentInput: string;
   calculation: Calculation;
   lastInput: CalculatorInput | Error;
 }
@@ -32,29 +34,34 @@ function calculateOutputScale(
   return textWidth <= containerWidth ? 1 : containerWidth / textWidth;
 }
 
-function formatNumber(number: string): string {
-  let integerPart, decimalPart;
-  [integerPart, decimalPart] = number.split(".");
-  const integerNumberPart = parseInt(integerPart);
+function formatNumber(number: string) {
+  const regexMatch = number.match(/^([-]?\d+)([^\d].*)?$/);
+  const integerPart = parseInt(regexMatch?.at(1) ?? "0").toLocaleString(
+    "en-US"
+  );
+  const otherPart = regexMatch?.at(2) ?? "";
 
-  let result = integerNumberPart.toLocaleString("en-US");
-  if (decimalPart) {
-    result = result.concat(".", decimalPart);
-  }
-  if (number.endsWith(".")) {
-    result = result.concat(".");
-  }
-  return result;
+  return integerPart.concat(otherPart);
+}
+
+function formatResult(result: Big) {
+  return formatNumber(Big(result.toPrecision(15)).toString());
 }
 
 function formatOutput(
-  currentOutput: string,
+  currentInput: string,
+  calculation: Calculation,
   lastInput: CalculatorInput | Error
 ): string {
   if (lastInput instanceof Error) {
     return lastInput.message;
+  } else if (
+    isMathematicalOperation(lastInput) ||
+    lastInput === CalculatorOperation.Calculate
+  ) {
+    return formatResult(calculation.result ?? Big(0));
   } else {
-    return formatNumber(currentOutput);
+    return formatNumber(currentInput);
   }
 }
 
@@ -70,12 +77,12 @@ function formatCalculation(
 }
 
 const Display: React.FC<DisplayProps> = ({
-  currentOutput,
+  currentInput,
   calculation,
   lastInput,
 }) => {
   const calculationString = formatCalculation(calculation, lastInput);
-  const inputString = formatOutput(currentOutput, lastInput);
+  const inputString = formatOutput(currentInput, calculation, lastInput);
   const canvas = useMemo(() => {
     const canvas = document.createElement("canvas");
     const context = canvas.getContext("2d");
